@@ -102,6 +102,7 @@ def hallarCoordenadas(_mapa):
     (es decir, ¿donde se encuentra la vaquita '&' ? ¿Qué fila y qué columna? )
     retorna el valor de fila y el valor de columna
     """
+    
     ...
     return f,c
     
