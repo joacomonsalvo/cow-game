@@ -42,6 +42,7 @@ Si la vaquita no logra cumplir con algun nivel se muestra game over y se pregunt
 a jugar. Si se pasan los tres niveles se muestra que ganamos y se pregunta si queremos volver a jugar
 
 
+
 -----------------------------------------------------------------------------------------------
 """
 #----------------------------------------------------------------------------------------------
