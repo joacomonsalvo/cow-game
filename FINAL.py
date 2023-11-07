@@ -69,8 +69,13 @@ def crearMapaNuevo(_mapa, _dificultad):
     3- Se retorna el mapa al menú principal
     
     """
-    sqMatriz = 5
-    _mapa = [[0 for cero in range(sqMatriz)] for ceros in range(sqMatriz)]    
+
+    vaquita = "&"
+    pastoComun = "I"
+    pastoComestible = "P"
+    tranqueras = "T"
+    establo = "E"
+
     return _mapa
 
 def mostrarMapa(_mapa):
@@ -185,7 +190,7 @@ Se carga la booleana llegoAlDestino como falso
 score = 100
 dificultad = 1
 tranqueras = 0
-mapa = []
+mapa = [[0 for cero in range(5)] for ceros in range(5)]
 mapa = crearMapaNuevo(mapa, dificultad)
 llegoAlDestino = False
     
