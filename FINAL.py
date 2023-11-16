@@ -18,7 +18,7 @@ Videojuego que presenta un mapa de juego en donde:
 |S + enter|  = abajo ;
 |D + enter|  = derecha.
 
-El objetivo es que la vaquita llegue a "E" (establo) una vez que ha saltado 6 tranqueras.
+El objetivo es que la vaquita llegue a "E" (establo) una vez que ha saltado 7 tranqueras.
 Se utiliza una matriz de 5 x 5 para representar el mapa en donde las tranqueras se cargan
 aleatoriamente (7 tranqueras).El establo siempre estará en el último casillero (el 4,4).
 Aparecen en misma proporcion (pasto y plantitas) al inicio del juego (8 y 8)
@@ -40,6 +40,7 @@ Mejora para el  10:
 Se crean 3 partidas con diferentes niveles de dificultad (7 tranqueras, 9 tranqueras, 11 tranqueras)
 Si la vaquita no logra cumplir con algun nivel se muestra game over y se pregunta si se quiere volver
 a jugar. Si se pasan los tres niveles se muestra que ganamos y se pregunta si queremos volver a jugar
+
 
 
 -----------------------------------------------------------------------------------------------
@@ -67,16 +68,51 @@ def crearMapaNuevo(_mapa, _dificultad):
     2- Se carga con el pasto, las plantitas, el establo, la vaquita y las tranqueras
     (vaquita empieza en [0][0])
     3- Se retorna el mapa al menú principal
-    
     """
 
     vaquita = "&"
     pastoComun = "I"
     pastoComestible = "P"
-    tranqueras = "T"
+    tranquera = "T"
     establo = "E"
 
-    return _mapa
+    _mapa = [[0 for cero in range(5)] for ceros in range(5)]
+    _mapa[0][0] = vaquita  # Establecer posicion vaquita
+    _mapa[4][4] = establo  # Establecer posicion establo
+
+    if _dificultad == 1:
+        tranqueras = 7
+        nPastoComun = 8
+        nPastoComestible = 8
+
+        # Distribucion de Tranqueras
+        for t in range(tranqueras):
+            while True:
+                fila = random.randint(0, 4)
+                columna = random.randint(0, 4)
+                if _mapa[fila][columna] == 0:
+                    _mapa[fila][columna] = tranquera
+                    break
+
+        # Distribucion de Pasto Comun
+        for p in range(nPastoComun):
+            while True:
+                fila = random.randint(0, 4)
+                columna = random.randint(0, 4)
+                if _mapa[fila][columna] == 0:
+                    _mapa[fila][columna] = pastoComun
+                    break
+
+        # Distribucion de Pasto Comestible
+        for c in range(nPastoComestible):
+            while True:
+                fila = random.randint(0, 4)
+                columna = random.randint(0, 4)
+                if _mapa[fila][columna] == 0:
+                    _mapa[fila][columna] = pastoComestible
+                    break
+
+        return _mapa
 
 def mostrarMapa(_mapa):
     for fila in _mapa:
@@ -191,7 +227,7 @@ Se carga la booleana llegoAlDestino como falso
 score = 100
 dificultad = 1
 tranqueras = 0
-mapa = [[0 for cero in range(5)] for ceros in range(5)]
+mapa = []
 mapa = crearMapaNuevo(mapa, dificultad)
 llegoAlDestino = False
     
