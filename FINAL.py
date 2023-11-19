@@ -193,7 +193,26 @@ def irArriba(_mapa, _tranquera, _llegoAlDestino, _score):
         b) Si  en esa posición a la que se mueve tiene "T" de tranquera sumará una tranquera al contador
         c) Si en esa posición a la que se mueve tiene "X" de llegada se cambia _llegoAlDestino por True
     """
-    ...
+    f, c = hallarCoordenadas(_mapa)
+
+    #-Chequeo de obstáculos en posición-
+    if _mapa[f][c] == 'T':
+        _tranquera += 1
+        _mapa[f][c] = 'I'
+    elif _mapa[f][c] == 'E':
+        _llegoAlDestino = True
+    else:
+        _mapa[f][c] = 'I'
+
+    #-Actualización de posición-
+    if f == 0:
+        f = 4
+    else: 
+        f -= 1
+
+    _mapa[f][c] = "&"
+
+    return _mapa, _tranquera, _llegoAlDestino, _score
     
     return _mapa, _tranquera, _llegoAlDestino, _score
 
@@ -210,7 +229,27 @@ def irAbajo(_mapa, _tranquera, _llegoAlDestino, _score):
         b) Si  en esa posición a la que se mueve tiene "T" de tranquera sumará una tranquera al contador
         c) Si en esa posición a la que se mueve tiene "X" de llegada se cambia _llegoAlDestino por True
     """
-    ...
+    f, c = hallarCoordenadas(_mapa)
+    
+    #-Chequeo de obstaculos en posicion-
+    
+    if _mapa[f][c] == 'T':
+        _tranquera += 1
+
+    elif _mapa[f][c] == 'E':
+        _llegoAlDestino = True
+    
+    else:
+        mapa[f][c] = "I"
+
+    #-Actualizacion de posicion-
+        
+    if f == 4:        
+        f = 0
+    else: 
+        f += 1
+    
+    _mapa[f][c] = "&"
     
     return _mapa, _tranquera, _llegoAlDestino, _score
 
@@ -240,7 +279,7 @@ def irIzquierda(_mapa, _tranquera, _llegoAlDestino, _score):
 
     #-Chequeo de obstaculos en posicion-
     if _mapa[f][c] == 'T':
-        tranqueras += 1
+        _tranquera += 1
 
     elif _mapa[f][c] == 'E':
         _llegoAlDestino = True
