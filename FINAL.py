@@ -270,7 +270,7 @@ def irIzquierda(_mapa, _tranquera, _llegoAlDestino, _score):
 
     #-Actualizacion de posicion-
     if c == 0:        
-        c = 4
+        c = -1
     else: 
         c -= 1
     
