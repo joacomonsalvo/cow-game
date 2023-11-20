@@ -295,6 +295,7 @@ Se crea el mapa y se llama al método crearMapaNuevo.
 Se cargan las tranqueras en 0
 Se carga la booleana llegoAlDestino como falso
 """
+
 score = 100
 dificultad = 1
 tranqueras = 0
@@ -324,17 +325,26 @@ while llegoAlDestino == False and score > 0 :
     elif cursor.upper() == "A":
         mapa , tranqueras, llegoAlDestino, score = irIzquierda(mapa, tranqueras, llegoAlDestino, score)
 
-    if llegoAlDestino == True or score <= 0:
+    if llegoAlDestino == True:
+        print(f"{c_fore.BLUE} Level: {dificultad} {c_style.RESET_ALL}")
+        print(f"{c_fore.GREEN} Score: {score} {c_style.RESET_ALL}")
+        print(f"{c_fore.YELLOW} Tranqueras: {tranqueras} {c_style.RESET_ALL}")
+        print(f"{c_fore.WHITE} ___________________________________ {c_style.RESET_ALL}")
+        print()
         mostrarMapa(mapa)
-        print("GAME OVER") if score <= 0 else print("GANASTE")
+
+        print("GANASTE")
+
+    if score <= 0:
+        print("GAME OVER")
         jugarSiNo = input("\nQueres jugar de nuevo? SI o No? ").upper()
         
         if jugarSiNo == "SI":
-            llegoAlDestino == False
-            score = 100
-            continue
+                llegoAlDestino == False
+                score = 100
+                continue
 
-        else:
+        elif jugarSiNo == "NO":
             break
 
 #----------------------------------------------------------------------------------------------
