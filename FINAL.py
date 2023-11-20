@@ -206,9 +206,21 @@ def irArriba(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
     if f == 0:
         mapa[f][c] = "I"
         f = 4
-        mapa[f][c] = "&"
         lugarSiguiente = mapa[f][c]
         score -= 10
+
+        if lugarSiguiente == "T":
+            tranqueras += 1
+            score -= 25
+        elif lugarSiguiente == "E" and tranqueras == 7:
+            llegoAlDestino = True
+            score += 500
+        elif lugarSiguiente == "E" and tranqueras != 7:
+            lugarSiguiente = 'E'
+        elif lugarSiguiente == "P":
+            score += 250
+
+        mapa[f][c] = "&"
 
     else:
         lugarSiguiente = mapa[f - 1][c]
@@ -216,14 +228,15 @@ def irArriba(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
         mapa[f][c] = "I"
         mapa[f - 1][c] = "&"
 
-    if lugarSiguiente == "T":
-        tranqueras += 1
-        score -= 25
-    elif lugarSiguiente == "E" and tranqueras == 7:
-        llegoAlDestino = True
-        score += 500
-    elif lugarSiguiente == "P":
-        score += 250
+        if lugarSiguiente == "T":
+            tranqueras += 1
+            score -= 25
+        elif lugarSiguiente == "E" and tranqueras == 7:
+            llegoAlDestino = True
+            score += 500
+        elif lugarSiguiente == "P":
+            score += 250
+
 
     return mapa, tranqueras, llegoAlDestino, score, lugarSiguiente
 
@@ -286,9 +299,21 @@ def irIzquierda(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
     if c == 0:
         mapa[f][c] = "I"
         c = 4
-        mapa[f][c] = "&"
         lugarSiguiente = mapa[f][c]
         score -= 10
+
+        if lugarSiguiente == "T":
+            tranqueras += 1
+            score -= 25
+        elif lugarSiguiente == "E" and tranqueras == 7:
+            llegoAlDestino = True
+            score += 500
+        elif lugarSiguiente == "E" and tranqueras != 7:
+            lugarSiguiente = 'E'
+        elif lugarSiguiente == "P":
+            score += 250
+
+        mapa[f][c] = "&"
 
     else:
         lugarSiguiente = mapa[f][c - 1]
@@ -296,14 +321,15 @@ def irIzquierda(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
         mapa[f][c] = "I"
         mapa[f][c - 1] = "&"
 
-    if lugarSiguiente == "T":
-        tranqueras += 1
-        score -= 25
-    elif lugarSiguiente == "E" and tranqueras == 7:
-        llegoAlDestino = True
-        score += 500
-    elif lugarSiguiente == "P":
-        score += 250
+        if lugarSiguiente == "T":
+            tranqueras += 1
+            score -= 25
+        elif lugarSiguiente == "E" and tranqueras == 7:
+            llegoAlDestino = True
+            score += 500
+        elif lugarSiguiente == "P":
+            score += 250
+    
 
     return mapa, tranqueras, llegoAlDestino, score, lugarSiguiente
 
