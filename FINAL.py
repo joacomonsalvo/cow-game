@@ -148,14 +148,14 @@ def hallarCoordenadas(mapa):
     return f,c
     
 
-def irDerecha(mapa, tranqueras, llegoAlDestino, score):
+def irDerecha(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
     """
     Primer método para mover la vaquita a derecha. Para ello:
     1- llama al método hallarCoordenadas para ver en dónde está la vaquita. Recibe dos enteros (fila y columna)
     2- A esa posición la reemplaza por "I".
     3- Identifica la posición a derecha de esa y le asiga la vaquita.
     4-  retorna mapa, _colisiones, _llegoAlDestino
-    
+
     Casos a tener en cuenta:
         a) Si está en la última columna y queremos correr a la derecha debemos volver a la columna 0
         b) Si  en esa posición a la que se mueve tiene "T" de tranquera sumará una tranquera al contador
@@ -185,17 +185,17 @@ def irDerecha(mapa, tranqueras, llegoAlDestino, score):
     elif lugarSiguiente == "P":
         score += 250
 
-    return mapa, tranqueras, llegoAlDestino, score
+    return mapa, tranqueras, llegoAlDestino, score, lugarSiguiente
 
 
-def irArriba(mapa, tranqueras, llegoAlDestino, score):
+def irArriba(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
     """
     Segundo método para mover la vaquita para arriba. Para ello:
     1- llama al método hallarCoordenadas para ver en dónde está la vaquita. Recibe dos enteros (fila y columna)
     2- A esa posición la reemplaza por "I".
     3- Identifica la posición a arriba de esa y le asiga la vaquita.
     4-  retorna mapa, _colisiones, _llegoAlDestino
-    
+
     Casos a tener en cuenta:
         a) Si está en la primera fila (0)  y queremos correr arriba debemos irnos a la última fila.
         b) Si  en esa posición a la que se mueve tiene "T" de tranquera sumará una tranquera al contador
@@ -225,17 +225,17 @@ def irArriba(mapa, tranqueras, llegoAlDestino, score):
     elif lugarSiguiente == "P":
         score += 250
 
-    return mapa, tranqueras, llegoAlDestino, score
+    return mapa, tranqueras, llegoAlDestino, score, lugarSiguiente
 
 
-def irAbajo(mapa, tranqueras, llegoAlDestino, score):
+def irAbajo(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
     """
     Tercer método para mover la vaquita para abajo. Para ello:
     1- llama al método hallarCoordenadas para ver en dónde está la vaquita. Recibe dos enteros (fila y columna)
     2- A esa posición la reemplaza por "I".
     3- Identifica la posición a arriba de esa y le asiga la vaquita.
     4-  retorna mapa, _colisiones, _llegoAlDestino
-    
+
     Casos a tener en cuenta:
         a) Si está en la última fila   y queremos correr hacia abajo debemos irnos a la primera fila (0).
         b) Si  en esa posición a la que se mueve tiene "T" de tranquera sumará una tranquera al contador
@@ -265,17 +265,17 @@ def irAbajo(mapa, tranqueras, llegoAlDestino, score):
     elif lugarSiguiente == "P":
         score += 250
 
-    return mapa, tranqueras, llegoAlDestino, score
+    return mapa, tranqueras, llegoAlDestino, score, lugarSiguiente
 
 
-def irIzquierda(mapa, tranqueras, llegoAlDestino, score):
+def irIzquierda(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
     """
     Cuarto método para mover la vaquita para arriba. Para ello:
     1- llama al método hallarCoordenadas para ver en dónde está la vaquita. Recibe dos enteros (fila y columna)
     2- A esa posición la reemplaza por "I".
     3- Identifica la posición a arriba de esa y le asiga la vaquita.
     4-  retorna mapa, _colisiones, _llegoAlDestino
-    
+
     Casos a tener en cuenta:
         a) Si está en la primera columna (0)  y queremos ir a izquierda debemos irnos a la última fila.
         b) Si  en esa posición a la que se mueve tiene "T" de tranquera sumará una tranquera al contador
@@ -305,7 +305,7 @@ def irIzquierda(mapa, tranqueras, llegoAlDestino, score):
     elif lugarSiguiente == "P":
         score += 250
 
-    return mapa, tranqueras, llegoAlDestino, score
+    return mapa, tranqueras, llegoAlDestino, score, lugarSiguiente
 
 #----------------------------------------------------------------------------------------------
 # CUERPO PRINCIPAL
@@ -324,6 +324,7 @@ tranqueras = 0
 mapa = []
 mapa = crearMapaNuevo(mapa, dificultad)
 llegoAlDestino = False
+lugarSiguiente = 0
     
 #----------------------------------------------------------------------------------------------
 # Bloque de cursor
@@ -339,13 +340,13 @@ while llegoAlDestino == False and score > 0 :
     mostrarMapa(mapa)
     cursor = input("->")
     if cursor.upper() == "W":
-        mapa , tranqueras, llegoAlDestino, score = irArriba(mapa, tranqueras, llegoAlDestino, score)
+        mapa , tranqueras, llegoAlDestino, score, lugarSiguiente = irArriba(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente)
     elif cursor.upper() == "D":
-        mapa , tranqueras, llegoAlDestino, score = irDerecha(mapa, tranqueras, llegoAlDestino, score)
+        mapa , tranqueras, llegoAlDestino, score, lugarSiguiente = irDerecha(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente)
     elif cursor.upper() == "S":
-        mapa , tranqueras, llegoAlDestino, score = irAbajo(mapa, tranqueras, llegoAlDestino, score)
+        mapa , tranqueras, llegoAlDestino, score, lugarSiguiente = irAbajo(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente)
     elif cursor.upper() == "A":
-        mapa , tranqueras, llegoAlDestino, score = irIzquierda(mapa, tranqueras, llegoAlDestino, score)
+        mapa , tranqueras, llegoAlDestino, score, lugarSiguiente = irIzquierda(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente)
 
     if llegoAlDestino == True:
         print(f"{c_fore.BLUE} Level: {dificultad} {c_style.RESET_ALL}")
@@ -369,6 +370,21 @@ while llegoAlDestino == False and score > 0 :
                 llegoAlDestino = False
                 continue
 
+        elif jugarSiNo == "NO":
+            break
+    
+    elif lugarSiguiente == 'E' and tranqueras != 7:
+        print("GAME OVER, No cumpliste con los objetivos")
+        jugarSiNo = input("\nQueres jugar de nuevo? SI o NO? ").upper()
+
+        if jugarSiNo == "SI":
+                score = 100
+                dificultad = 1
+                tranqueras = 0
+                mapa = crearMapaNuevo(mapa, dificultad)
+                llegoAlDestino = False
+                continue
+        
         elif jugarSiNo == "NO":
             break
 
