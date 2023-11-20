@@ -20,7 +20,7 @@ Videojuego que presenta un mapa de juego en donde:
 
 El objetivo es que la vaquita llegue a "E" (establo) una vez que ha saltado 7 tranqueras.
 Se utiliza una matriz de 5 x 5 para representar el mapa en donde las tranqueras se cargan
-aleatoriamente (7 tranqueras).El establo siempre estará en el último casillero (el 4,4).
+aleatoriamente (7 tranqueras). El establo siempre estará en el último casillero (el 4,4).
 Aparecen en misma proporcion (pasto y plantitas) al inicio del juego (8 y 8)
 No se marcará que el juego está ganado hasta que la vaquita haya saltado las 7 tranqueras.
 Si la vaquita ya comió la plantita o saltó la tranquera ese casillero queda con "I". 
@@ -60,7 +60,7 @@ colorama.init();
 #----------------------------------------------------------------------------------------------
 
 
-def crearMapaNuevo(_mapa, _dificultad):
+def crearMapaNuevo(mapa, dificultad):
     
     """
     Método de creación del nuevo mapa.
@@ -76,22 +76,22 @@ def crearMapaNuevo(_mapa, _dificultad):
     tranquera = "T"
     establo = "E"
 
-    _mapa = [[0 for cero in range(5)] for ceros in range(5)]
-    _mapa[0][0] = vaquita  # Establecer posicion vaquita
-    _mapa[4][4] = establo  # Establecer posicion establo
+    mapa = [[0 for cero in range(5)] for ceros in range(5)]
+    mapa[0][0] = vaquita  # Establecer posicion vaquita
+    mapa[4][4] = establo  # Establecer posicion establo
 
-    if _dificultad == 1:
-        tranqueras = 7
+    if dificultad == 1:
+        ntranqueras = 7
         nPastoComun = 8
         nPastoComestible = 8
 
         # Distribucion de Tranqueras
-        for t in range(tranqueras):
+        for t in range(ntranqueras):
             while True:
                 fila = random.randint(0, 4)
                 columna = random.randint(0, 4)
-                if _mapa[fila][columna] == 0:
-                    _mapa[fila][columna] = tranquera
+                if mapa[fila][columna] == 0:
+                    mapa[fila][columna] = tranquera
                     break
 
         # Distribucion de Pasto Comun
@@ -99,8 +99,8 @@ def crearMapaNuevo(_mapa, _dificultad):
             while True:
                 fila = random.randint(0, 4)
                 columna = random.randint(0, 4)
-                if _mapa[fila][columna] == 0:
-                    _mapa[fila][columna] = pastoComun
+                if mapa[fila][columna] == 0:
+                    mapa[fila][columna] = pastoComun
                     break
 
         # Distribucion de Pasto Comestible
@@ -108,14 +108,15 @@ def crearMapaNuevo(_mapa, _dificultad):
             while True:
                 fila = random.randint(0, 4)
                 columna = random.randint(0, 4)
-                if _mapa[fila][columna] == 0:
-                    _mapa[fila][columna] = pastoComestible
+                if mapa[fila][columna] == 0:
+                    mapa[fila][columna] = pastoComestible
                     break
 
-        return _mapa
+        return mapa
 
-def mostrarMapa(_mapa):
-    for fila in _mapa:
+
+def mostrarMapa(mapa):
+    for fila in mapa:
         for columna in fila:
             if columna == "&":
                 print(f"{c_fore.RED}{columna}	{c_style.RESET_ALL}", end="")
@@ -132,22 +133,22 @@ def mostrarMapa(_mapa):
         print()
     
 
-def hallarCoordenadas(_mapa):
+def hallarCoordenadas(mapa):
     """
     Método de búsqueda de una coordenada esfecífica
     (es decir, ¿donde se encuentra la vaquita '&' ? ¿Qué fila y qué columna? )
     retorna el valor de fila y el valor de columna
     """
     
-    for f in range(len(_mapa)):
-        for c in range(len(_mapa[f])):
-            if _mapa[f][c] == '&':
+    for f in range(len(mapa)):
+        for c in range(len(mapa[f])):
+            if mapa[f][c] == "&":
                 return f, c
 
     return f,c
     
 
-def irDerecha(_mapa, _tranquera, _llegoAlDestino, _score):
+def irDerecha(mapa, tranqueras, llegoAlDestino, score):
     """
     Primer método para mover la vaquita a derecha. Para ello:
     1- llama al método hallarCoordenadas para ver en dónde está la vaquita. Recibe dos enteros (fila y columna)
@@ -160,27 +161,23 @@ def irDerecha(_mapa, _tranquera, _llegoAlDestino, _score):
         b) Si  en esa posición a la que se mueve tiene "T" de tranquera sumará una tranquera al contador
         c) Si en esa posición a la que se mueve tiene "X" de llegada se cambia _llegoAlDestino por True
     """
-    f, c = hallarCoordenadas(_mapa)
+    f, c = hallarCoordenadas(mapa)
 
-    #-Actualizacion de posicion-
-    if c == 4:        
-        c = 0
-    else: 
-        c += 1
+    if c < len(mapa[0]) - 1:
+        lugarSiguiente = mapa[f][c + 1]
 
-    _mapa[f][c] = "&"
-    _mapa[f][c-1] = "I"
+        if lugarSiguiente == "T":
+            tranqueras += 1
+        elif lugarSiguiente == "E" and tranqueras == 7:
+            llegoAlDestino = True
 
-    #-Chequeo de obstaculos en posicion-
-    if _mapa[f][c] == 'T':
-        tranqueras += 1
-    elif _mapa[f][c] == 'E':
-        _llegoAlDestino = True
+        mapa[f][c] = "I"
+        mapa[f][c + 1] = "&"
 
-    return _mapa, _tranquera, _llegoAlDestino, _score
+    return mapa, tranqueras, llegoAlDestino, score
 
 
-def irArriba(_mapa, _tranquera, _llegoAlDestino, _score):
+def irArriba(mapa, tranqueras, llegoAlDestino, score):
     """
     Segundo método para mover la vaquita para arriba. Para ello:
     1- llama al método hallarCoordenadas para ver en dónde está la vaquita. Recibe dos enteros (fila y columna)
@@ -193,30 +190,23 @@ def irArriba(_mapa, _tranquera, _llegoAlDestino, _score):
         b) Si  en esa posición a la que se mueve tiene "T" de tranquera sumará una tranquera al contador
         c) Si en esa posición a la que se mueve tiene "X" de llegada se cambia _llegoAlDestino por True
     """
-    f, c = hallarCoordenadas(_mapa)
+    f, c = hallarCoordenadas(mapa)
 
-    #-Chequeo de obstáculos en posición-
-    if _mapa[f][c] == 'T':
-        _tranquera += 1
-        _mapa[f][c] = 'I'
-    elif _mapa[f][c] == 'E':
-        _llegoAlDestino = True
-    else:
-        _mapa[f][c] = 'I'
+    if f > 0:
+        lugarSiguiente = mapa[f - 1][c]
 
-    #-Actualización de posición-
-    if f == 0:
-        f = 4
-    else: 
-        f -= 1
+        if lugarSiguiente == "T":
+            tranqueras += 1
+        elif lugarSiguiente == "E" and tranqueras == 7:
+            llegoAlDestino = True
 
-    _mapa[f][c] = "&"
+        mapa[f][c] = "I"
+        mapa[f - 1][c] = "&"
 
-    return _mapa, _tranquera, _llegoAlDestino, _score
+    return mapa, tranqueras, llegoAlDestino, score
     
-    return _mapa, _tranquera, _llegoAlDestino, _score
 
-def irAbajo(_mapa, _tranquera, _llegoAlDestino, _score):
+def irAbajo(mapa, tranqueras, llegoAlDestino, score):
     """
     Tercer método para mover la vaquita para abajo. Para ello:
     1- llama al método hallarCoordenadas para ver en dónde está la vaquita. Recibe dos enteros (fila y columna)
@@ -229,31 +219,23 @@ def irAbajo(_mapa, _tranquera, _llegoAlDestino, _score):
         b) Si  en esa posición a la que se mueve tiene "T" de tranquera sumará una tranquera al contador
         c) Si en esa posición a la que se mueve tiene "X" de llegada se cambia _llegoAlDestino por True
     """
-    f, c = hallarCoordenadas(_mapa)
-    
-    #-Chequeo de obstaculos en posicion-
-    
-    if _mapa[f][c] == 'T':
-        _tranquera += 1
+    f, c = hallarCoordenadas(mapa)
 
-    elif _mapa[f][c] == 'E':
-        _llegoAlDestino = True
-    
-    else:
+    if f < len(mapa) - 1:
+        lugarSiguiente = mapa[f + 1][c]
+
+        if lugarSiguiente == "T":
+            tranqueras += 1
+        elif lugarSiguiente == "E" and tranqueras == 7:
+            llegoAlDestino = True
+
         mapa[f][c] = "I"
+        mapa[f + 1][c] = "&"
 
-    #-Actualizacion de posicion-
-        
-    if f == 4:        
-        f = 0
-    else: 
-        f += 1
-    
-    _mapa[f][c] = "&"
-    
-    return _mapa, _tranquera, _llegoAlDestino, _score
+    return mapa, tranqueras, llegoAlDestino, score
 
-def irIzquierda(_mapa, _tranquera, _llegoAlDestino, _score):
+
+def irIzquierda(mapa, tranqueras, llegoAlDestino, score):
     """
     Cuarto método para mover la vaquita para arriba. Para ello:
     1- llama al método hallarCoordenadas para ver en dónde está la vaquita. Recibe dos enteros (fila y columna)
@@ -266,25 +248,20 @@ def irIzquierda(_mapa, _tranquera, _llegoAlDestino, _score):
         b) Si  en esa posición a la que se mueve tiene "T" de tranquera sumará una tranquera al contador
         c) Si en esa posición a la que se mueve tiene "X" de llegada se cambia _llegoAlDestino por True
     """
-    f, c = hallarCoordenadas(_mapa)
+    f, c = hallarCoordenadas(mapa)
 
-    #-Actualizacion de posicion-
-    if c == 0:        
-        c = 4
-    else: 
-        c -= 1
-    
-    _mapa[f][c] = "&"
-    _mapa[f][c+1] = "I"
+    if c > 0:
+        lugarSiguiente = mapa[f][c - 1]
 
-    #-Chequeo de obstaculos en posicion-
-    if _mapa[f][c] == 'T':
-        _tranquera += 1
+        if lugarSiguiente == "T":
+            tranqueras += 1
+        elif lugarSiguiente == "E" and tranqueras == 7:
+            llegoAlDestino = True
 
-    elif _mapa[f][c] == 'E':
-        _llegoAlDestino = True
+        mapa[f][c] = "I"
+        mapa[f][c - 1] = "&"
 
-    return _mapa, _tranquera, _llegoAlDestino, _score
+    return mapa, tranqueras, llegoAlDestino, score
 
 
 
@@ -315,8 +292,7 @@ while llegoAlDestino == False and score > 0 :
     print(f"{c_fore.YELLOW} Tranqueras: {tranqueras} {c_style.RESET_ALL}")
     print(f"{c_fore.WHITE} ___________________________________ {c_style.RESET_ALL}")
     print()
-    #if mapa[4][4] != '&': #tip: agregar este código para que siempre el establo esté en (4,4)
-    #    mapa[4][4] = 'E'
+    
     mostrarMapa(mapa,)
     cursor = input("->")
     if cursor.upper() == "W":
@@ -327,6 +303,10 @@ while llegoAlDestino == False and score > 0 :
         mapa , tranqueras, llegoAlDestino, score = irAbajo(mapa, tranqueras, llegoAlDestino, score)
     elif cursor.upper() == "A":
         mapa , tranqueras, llegoAlDestino, score = irIzquierda(mapa, tranqueras, llegoAlDestino, score)
+
+else:
+    print("GANASTE") if llegoAlDestino == True else print("PERDISTE")
+    jugarSiNo = input("Quires jugar de nuevo? SI o NO: ")
 
 #----------------------------------------------------------------------------------------------
 # Fin del juego
