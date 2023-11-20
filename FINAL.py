@@ -163,21 +163,27 @@ def irDerecha(mapa, tranqueras, llegoAlDestino, score):
     """
     f, c = hallarCoordenadas(mapa)
 
-    if c < len(mapa[0]) - 1:
-        lugarSiguiente = mapa[f][c + 1]
+    if c == 4:
+        mapa[f][c] = "I"
+        c = 0
+        mapa[f][c] = "&"
+        lugarSiguiente = mapa[f][c]
         score -= 10
 
-        if lugarSiguiente == "T":
-            tranqueras += 1
-            score -= 25
-        elif lugarSiguiente == "E" and tranqueras == 7:
-            llegoAlDestino = True
-            score += 500
-        elif lugarSiguiente == "P":
-            score += 250
-
+    else:
+        lugarSiguiente = mapa[f][c+1]
+        score -= 10
         mapa[f][c] = "I"
         mapa[f][c + 1] = "&"
+
+    if lugarSiguiente == "T":
+        tranqueras += 1
+        score -= 25
+    elif lugarSiguiente == "E" and tranqueras == 7:
+        llegoAlDestino = True
+        score += 500
+    elif lugarSiguiente == "P":
+        score += 250
 
     return mapa, tranqueras, llegoAlDestino, score
 
@@ -197,24 +203,30 @@ def irArriba(mapa, tranqueras, llegoAlDestino, score):
     """
     f, c = hallarCoordenadas(mapa)
 
-    if f > 0:
-        lugarSiguiente = mapa[f - 1][c]
+    if f == 0:
+        mapa[f][c] = "I"
+        f = 4
+        mapa[f][c] = "&"
+        lugarSiguiente = mapa[f][c]
         score -= 10
 
-        if lugarSiguiente == "T":
-            tranqueras += 1
-            score -= 25
-        elif lugarSiguiente == "E" and tranqueras == 7:
-            llegoAlDestino = True
-            score += 500
-        elif lugarSiguiente == "P":
-            score += 250
-
+    else:
+        lugarSiguiente = mapa[f - 1][c]
+        score -= 10
         mapa[f][c] = "I"
         mapa[f - 1][c] = "&"
 
+    if lugarSiguiente == "T":
+        tranqueras += 1
+        score -= 25
+    elif lugarSiguiente == "E" and tranqueras == 7:
+        llegoAlDestino = True
+        score += 500
+    elif lugarSiguiente == "P":
+        score += 250
+
     return mapa, tranqueras, llegoAlDestino, score
-    
+
 
 def irAbajo(mapa, tranqueras, llegoAlDestino, score):
     """
@@ -231,21 +243,27 @@ def irAbajo(mapa, tranqueras, llegoAlDestino, score):
     """
     f, c = hallarCoordenadas(mapa)
 
-    if f < len(mapa) - 1:
-        lugarSiguiente = mapa[f + 1][c]
+    if f == 4:
+        mapa[f][c] = "I"
+        f = 0
+        mapa[f][c] = "&"
+        lugarSiguiente = mapa[f][c]
         score -= 10
 
-        if lugarSiguiente == "T":
-            tranqueras += 1
-            score -= 25
-        elif lugarSiguiente == "E" and tranqueras == 7:
-            llegoAlDestino = True
-            score += 500
-        elif lugarSiguiente == "P":
-            score += 250
-
+    else:
+        lugarSiguiente = mapa[f+1][c]
+        score -= 10
         mapa[f][c] = "I"
-        mapa[f + 1][c] = "&"
+        mapa[f+1][c] = "&"
+
+    if lugarSiguiente == "T":
+        tranqueras += 1
+        score -= 25
+    elif lugarSiguiente == "E" and tranqueras == 7:
+        llegoAlDestino = True
+        score += 500
+    elif lugarSiguiente == "P":
+        score += 250
 
     return mapa, tranqueras, llegoAlDestino, score
 
@@ -265,25 +283,29 @@ def irIzquierda(mapa, tranqueras, llegoAlDestino, score):
     """
     f, c = hallarCoordenadas(mapa)
 
-    if c > 0:
-        lugarSiguiente = mapa[f][c - 1]
+    if c == 0:
+        mapa[f][c] = "I"
+        c = 4
+        mapa[f][c] = "&"
+        lugarSiguiente = mapa[f][c]
         score -= 10
 
-        if lugarSiguiente == "T":
-            tranqueras += 1
-            score -= 25
-        elif lugarSiguiente == "E" and tranqueras == 7:
-            llegoAlDestino = True
-            score += 500
-        elif lugarSiguiente == "P":
-            score += 250
-
+    else:
+        lugarSiguiente = mapa[f][c - 1]
+        score -= 10
         mapa[f][c] = "I"
         mapa[f][c - 1] = "&"
 
+    if lugarSiguiente == "T":
+        tranqueras += 1
+        score -= 25
+    elif lugarSiguiente == "E" and tranqueras == 7:
+        llegoAlDestino = True
+        score += 500
+    elif lugarSiguiente == "P":
+        score += 250
+
     return mapa, tranqueras, llegoAlDestino, score
-
-
 
 #----------------------------------------------------------------------------------------------
 # CUERPO PRINCIPAL
@@ -337,10 +359,10 @@ while llegoAlDestino == False and score > 0 :
 
     if score <= 0:
         print("GAME OVER")
-        jugarSiNo = input("\nQueres jugar de nuevo? SI o No? ").upper()
+        jugarSiNo = input("\nQueres jugar de nuevo? SI o NO? ").upper()
         
         if jugarSiNo == "SI":
-                llegoAlDestino == False
+                llegoAlDestino = False
                 score = 100
                 continue
 
@@ -350,4 +372,3 @@ while llegoAlDestino == False and score > 0 :
 #----------------------------------------------------------------------------------------------
 # Fin del juego
 #----------------------------------------------------------------------------------------------
-
