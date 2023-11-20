@@ -362,8 +362,11 @@ while llegoAlDestino == False and score > 0 :
         jugarSiNo = input("\nQueres jugar de nuevo? SI o NO? ").upper()
         
         if jugarSiNo == "SI":
-                llegoAlDestino = False
                 score = 100
+                dificultad = 1
+                tranqueras = 0
+                mapa = crearMapaNuevo(mapa, dificultad)
+                llegoAlDestino = False
                 continue
 
         elif jugarSiNo == "NO":
