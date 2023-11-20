@@ -80,39 +80,38 @@ def crearMapaNuevo(mapa, dificultad):
     mapa[0][0] = vaquita  # Establecer posicion vaquita
     mapa[4][4] = establo  # Establecer posicion establo
 
-    if dificultad == 1:
-        ntranqueras = 7
-        nPastoComun = 8
-        nPastoComestible = 8
+    ntranqueras = [7, 9, 11]
+    nPastoComun = [8, 7, 6]
+    nPastoComestible = [8, 7, 6]
+    
+    # Distribucion de Tranqueras
+    for t in range(ntranqueras[dificultad - 1]):
+        while True:
+            fila = random.randint(0, 4)
+            columna = random.randint(0, 4)
+            if mapa[fila][columna] == 0:
+                mapa[fila][columna] = tranquera
+                break
 
-        # Distribucion de Tranqueras
-        for t in range(ntranqueras):
-            while True:
-                fila = random.randint(0, 4)
-                columna = random.randint(0, 4)
-                if mapa[fila][columna] == 0:
-                    mapa[fila][columna] = tranquera
-                    break
+    # Distribucion de Pasto Comun
+    for p in range(nPastoComun[dificultad - 1]):
+        while True:
+            fila = random.randint(0, 4)
+            columna = random.randint(0, 4)
+            if mapa[fila][columna] == 0:
+                mapa[fila][columna] = pastoComun
+                break
 
-        # Distribucion de Pasto Comun
-        for p in range(nPastoComun):
-            while True:
-                fila = random.randint(0, 4)
-                columna = random.randint(0, 4)
-                if mapa[fila][columna] == 0:
-                    mapa[fila][columna] = pastoComun
-                    break
+    # Distribucion de Pasto Comestible
+    for c in range(nPastoComestible[dificultad - 1]):
+        while True:
+            fila = random.randint(0, 4)
+            columna = random.randint(0, 4)
+            if mapa[fila][columna] == 0:
+                mapa[fila][columna] = pastoComestible
+                break
 
-        # Distribucion de Pasto Comestible
-        for c in range(nPastoComestible):
-            while True:
-                fila = random.randint(0, 4)
-                columna = random.randint(0, 4)
-                if mapa[fila][columna] == 0:
-                    mapa[fila][columna] = pastoComestible
-                    break
-
-        return mapa
+    return mapa
 
 
 def mostrarMapa(mapa):
@@ -162,6 +161,7 @@ def irDerecha(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
         c) Si en esa posición a la que se mueve tiene "X" de llegada se cambia _llegoAlDestino por True
     """
     f, c = hallarCoordenadas(mapa)
+    nTranqueras = 2 * dificultad + 5
 
     if c == 4:
         mapa[f][c] = "I"
@@ -179,7 +179,7 @@ def irDerecha(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
     if lugarSiguiente == "T":
         tranqueras += 1
         score -= 25
-    elif lugarSiguiente == "E" and tranqueras == 7:
+    elif lugarSiguiente == "E" and tranqueras == nTranqueras:
         llegoAlDestino = True
         score += 500
     elif lugarSiguiente == "P":
@@ -202,6 +202,7 @@ def irArriba(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
         c) Si en esa posición a la que se mueve tiene "X" de llegada se cambia _llegoAlDestino por True
     """
     f, c = hallarCoordenadas(mapa)
+    nTranqueras = 2 * dificultad + 5
 
     if f == 0:
         mapa[f][c] = "I"
@@ -212,10 +213,10 @@ def irArriba(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
         if lugarSiguiente == "T":
             tranqueras += 1
             score -= 25
-        elif lugarSiguiente == "E" and tranqueras == 7:
+        elif lugarSiguiente == "E" and tranqueras == nTranqueras:
             llegoAlDestino = True
             score += 500
-        elif lugarSiguiente == "E" and tranqueras != 7:
+        elif lugarSiguiente == "E" and tranqueras != nTranqueras:
             lugarSiguiente = 'E'
         elif lugarSiguiente == "P":
             score += 250
@@ -231,7 +232,7 @@ def irArriba(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
         if lugarSiguiente == "T":
             tranqueras += 1
             score -= 25
-        elif lugarSiguiente == "E" and tranqueras == 7:
+        elif lugarSiguiente == "E" and tranqueras == nTranqueras:
             llegoAlDestino = True
             score += 500
         elif lugarSiguiente == "P":
@@ -255,6 +256,7 @@ def irAbajo(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
         c) Si en esa posición a la que se mueve tiene "X" de llegada se cambia _llegoAlDestino por True
     """
     f, c = hallarCoordenadas(mapa)
+    nTranqueras = 2 * dificultad + 5
 
     if f == 4:
         mapa[f][c] = "I"
@@ -272,7 +274,7 @@ def irAbajo(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
     if lugarSiguiente == "T":
         tranqueras += 1
         score -= 25
-    elif lugarSiguiente == "E" and tranqueras == 7:
+    elif lugarSiguiente == "E" and tranqueras == nTranqueras:
         llegoAlDestino = True
         score += 500
     elif lugarSiguiente == "P":
@@ -295,6 +297,7 @@ def irIzquierda(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
         c) Si en esa posición a la que se mueve tiene "X" de llegada se cambia _llegoAlDestino por True
     """
     f, c = hallarCoordenadas(mapa)
+    nTranqueras = 2 * dificultad + 5
 
     if c == 0:
         mapa[f][c] = "I"
@@ -305,10 +308,10 @@ def irIzquierda(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
         if lugarSiguiente == "T":
             tranqueras += 1
             score -= 25
-        elif lugarSiguiente == "E" and tranqueras == 7:
+        elif lugarSiguiente == "E" and tranqueras == nTranqueras:
             llegoAlDestino = True
             score += 500
-        elif lugarSiguiente == "E" and tranqueras != 7:
+        elif lugarSiguiente == "E" and tranqueras != nTranqueras:
             lugarSiguiente = 'E'
         elif lugarSiguiente == "P":
             score += 250
@@ -324,7 +327,7 @@ def irIzquierda(mapa, tranqueras, llegoAlDestino, score, lugarSiguiente):
         if lugarSiguiente == "T":
             tranqueras += 1
             score -= 25
-        elif lugarSiguiente == "E" and tranqueras == 7:
+        elif lugarSiguiente == "E" and tranqueras == nTranqueras:
             llegoAlDestino = True
             score += 500
         elif lugarSiguiente == "P":
@@ -382,7 +385,29 @@ while llegoAlDestino == False and score > 0 :
         print()
         mostrarMapa(mapa)
 
-        print("GANASTE")
+        if dificultad < 3:
+            print("COMPLETASTE EL NIVEL!")
+            score = 100
+            dificultad = dificultad + 1
+            tranqueras = 0
+            mapa = crearMapaNuevo(mapa, dificultad)
+            llegoAlDestino = False
+            continue
+        
+        else:
+            print("GANASTE")
+            jugarSiNo = input("\nQueres jugar de nuevo? SI o NO? ").upper()
+
+            if jugarSiNo == "SI":
+                    score = 100
+                    dificultad = 1
+                    tranqueras = 0
+                    mapa = crearMapaNuevo(mapa, dificultad)
+                    llegoAlDestino = False
+                    continue
+            
+            elif jugarSiNo == "NO":
+                break
 
     elif score <= 0:
         print("GAME OVER")
