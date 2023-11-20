@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="Nicolas"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2023-11-20 06:35:21 p.&#160;m."/>
+        <attribute name="created" value="Tmljb2xhcztERVNLVE9QLUY1QlI1STI7MjAyMy0xMS0xOTswOTowNTowNSBwLsKgbS47MzM0MQ=="/>
+        <attribute name="edited" value="Tmljb2xhcztERVNLVE9QLUY1QlI1STI7MjAyMy0xMS0yMDswNjozNToyMSBwLsKgbS47MzszNDQx"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body/>
+    </function>
+    <function name="crearMapa" type="Integer" variable="mapa">
+        <parameters>
+            <parameter name="mapa" type="Integer" array="True"/>
+            <parameter name="dificultad" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="mapa" type="Integer" array="False" size=""/>
+            <declare name="vaquita" type="String" array="False" size=""/>
+            <declare name="pastoComun" type="String" array="False" size=""/>
+            <declare name="pastoComestible" type="String" array="False" size=""/>
+            <declare name="tranqueras" type="Integer" array="False" size=""/>
+            <declare name="establo" type="String" array="False" size=""/>
+            <assign variable="vaquita" expression="&quot;&amp;&quot;"/>
+            <assign variable="pastoComun" expression="&quot;I&quot;"/>
+            <assign variable="pastoComestible" expression="&quot;P&quot;"/>
+            <assign variable="establo" expression="&quot;E&quot;"/>
+            <assign variable="mapa" expression="&quot;Matriz 5x5&quot;"/>
+            <if expression="dificultad == 1">
+                <then>
+                    <assign variable="tranqueras" expression="7"/>
+                    <assign variable="nPastoComun" expression="8"/>
+                    <assign variable="nPastoComestible" expression="8"/>
+                </then>
+                <else/>
+            </if>
+        </body>
+    </function>
+    <function name="hallarCoordenada" type="Integer" variable="f, c">
+        <parameters>
+            <parameter name="mapa" type="Integer" array="True"/>
+        </parameters>
+        <body>
+            <declare name="f" type="Integer" array="False" size=""/>
+            <declare name="c" type="Integer" array="False" size=""/>
+            <for variable="f" start="0" end="4" direction="inc" step="1">
+                <for variable="c" start="0" end="4" direction="inc" step="1">
+                    <if expression="mapa[f][c] == &quot;&amp;&quot;">
+                        <then>
+                            <output expression="f" newline="True"/>
+                            <output expression="c" newline="True"/>
+                        </then>
+                        <else/>
+                    </if>
+                </for>
+            </for>
+        </body>
+    </function>
+    <function name="irDerecha" type="Integer" variable="mapa, tranquera, llegoAlDestino,score, lugarSiguiente">
+        <parameters>
+            <parameter name="mapa" type="Integer" array="True"/>
+            <parameter name="tranqueras" type="Integer" array="False"/>
+            <parameter name="llegoAlDestino" type="Boolean" array="False"/>
+            <parameter name="score" type="Integer" array="False"/>
+            <parameter name="lugarSiguiente" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="tranquera, score" type="Integer" array="False" size=""/>
+            <declare name="mapa" type="String" array="True" size="5x5"/>
+            <declare name="llegoAlDestino" type="Boolean" array="False" size=""/>
+            <assign variable="f, c" expression="hallarCoordenadas(mapa)"/>
+            <if expression="c == 4">
+                <then>
+                    <assign variable="mapa[f][c]" expression="'I'"/>
+                    <assign variable="C" expression="4"/>
+                    <assign variable="mapa[f][c]" expression="'&amp;'"/>
+                    <assign variable="lugarSiguiente" expression="mapa[f][c]"/>
+                    <assign variable="score" expression="score - 10"/>
+                </then>
+                <else>
+                    <assign variable="lugarSiguiente" expression="mapa[f][c+1]"/>
+                    <assign variable="score" expression="score - 10"/>
+                    <assign variable="mapa[f][c]" expression="'I'"/>
+                    <assign variable="mapa[f][c + 1]" expression="'&amp;'"/>
+                </else>
+            </if>
+            <if expression="lugarSiguiente == &quot;T&quot;">
+                <then>
+                    <assign variable="tranquera" expression="tranquera +1"/>
+                    <assign variable="score" expression="score - 25"/>
+                </then>
+                <else>
+                    <if expression="lugarSiguiente == &quot;E&quot;">
+                        <then>
+                            <assign variable="llegoAlDestino" expression="True"/>
+                            <assign variable="score" expression="score 500"/>
+                        </then>
+                        <else>
+                            <if expression="lugarSiguiente == 'P'">
+                                <then>
+                                    <assign variable="score" expression="score + 250"/>
+                                </then>
+                                <else/>
+                            </if>
+                        </else>
+                    </if>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>
