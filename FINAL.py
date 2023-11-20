@@ -357,7 +357,7 @@ while llegoAlDestino == False and score > 0 :
 
         print("GANASTE")
 
-    if score <= 0:
+    elif score <= 0:
         print("GAME OVER")
         jugarSiNo = input("\nQueres jugar de nuevo? SI o NO? ").upper()
         
