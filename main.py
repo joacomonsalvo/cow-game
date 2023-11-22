@@ -4,17 +4,16 @@ from colorama import Fore as c_fore
 from colorama import Style as c_style
 import colorama
 
-colorama.init()
-
-score = 100
-difficulty = 1
-gates = 0
-mold = []
-arrived = False
-next_position = 0
-
 
 if __name__ == "__main__":
+    colorama.init()
+
+    score = 100
+    difficulty = 1
+    gates = 0
+    arrived = False
+    next_position = 0
+
     mold = create_mold(difficulty)
 
     while not arrived and score > 0:

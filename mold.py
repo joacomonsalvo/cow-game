@@ -32,7 +32,7 @@ def random_gen(mold, number_items, item_type, difficulty):
         while True:
             row = random.randint(0, len(mold) - 1)
             column = random.randint(0, len(mold) - 1)
-            if mold[row][column] == 0:
+            if mold[row][column] == "0":
                 mold[row][column] = item_type
                 break
 

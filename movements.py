@@ -27,7 +27,7 @@ def go_right(mold, gates, arrived, score, difficulty):
     elif next_position == "P":
         score += 250
 
-    return mold, gates, arrived, score, next_position
+    return mold, gates, arrived, score, next_position, difficulty
 
 
 def go_up(mold, gates, arrived, score, difficulty):
@@ -68,7 +68,7 @@ def go_up(mold, gates, arrived, score, difficulty):
         elif next_position == "P":
             score += 250
 
-    return mold, gates, arrived, score, next_position
+    return mold, gates, arrived, score, next_position, difficulty
 
 
 def go_down(mold, gates, arrived, score, difficulty):
@@ -97,7 +97,7 @@ def go_down(mold, gates, arrived, score, difficulty):
     elif next_position == "P":
         score += 250
 
-    return mold, gates, arrived, score, next_position
+    return mold, gates, arrived, score, next_position, difficulty
 
 
 def go_left(mold, gates, arrived, score, difficulty):
@@ -138,4 +138,4 @@ def go_left(mold, gates, arrived, score, difficulty):
         elif next_position == "P":
             score += 250
 
-    return mold, gates, arrived, score, next_position
+    return mold, gates, arrived, score, next_position, difficulty
