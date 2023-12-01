@@ -64,3 +64,14 @@ def coordinates(mold):
         for c in range(len(mold[r])):
             if mold[r][c] == "&":
                 return r, c
+
+
+def reset(message, score_value, difficulty_value, gates_value, arrived_value):
+    print(message)
+    score = score_value
+    difficulty = difficulty_value
+    gates = gates_value
+    mold = create_mold(difficulty)
+    arrived = arrived_value
+
+    return score, difficulty, gates, mold, arrived
