@@ -1,7 +1,7 @@
 from movements import go_up, go_down, go_left, go_right
 from colorama import Fore as c_fore
 from colorama import Style as c_style
-from mold import create_mold, print_map, reset
+from mold import create_mold, print_map
 import colorama
 
 
@@ -43,14 +43,22 @@ if __name__ == "__main__":
             print_map(mold)
 
             if difficulty < 3:
-                reset("LEVEL COMPLETED!", 100, difficulty + 1, 0, False)
-
+                print("LEVEL COMPLETED!")
+                score = 100
+                difficulty = difficulty + 1
+                gates = 0
+                mold = create_mold(difficulty)
+                arrived = False
             else:
                 print("YOU WIN")
                 play_again = input("\nDo you want to play again? YES or NO ").upper()
 
                 if play_again == "YES":
-                    reset("", 100, 1, 0, False)
+                    score = 100
+                    difficulty = 1
+                    gates = 0
+                    mold = create_mold(difficulty)
+                    arrived = False
 
                 elif play_again == "NO":
                     break
@@ -60,17 +68,11 @@ if __name__ == "__main__":
             play_again = input("\nDo you want to play again? YES or NO ").upper()
 
             if play_again == "YES":
-                reset("", 100, 1, 0, False)
-
-            elif play_again == "NO":
-                break
-
-        elif next_position == "E" and gates != 7:
-            print("GAME OVER, Invalid Movement")
-            play_again = input("\nDo you want to play again? YES or NO ").upper()
-
-            if play_again == "YES":
-                reset("", 100, 1, 0, False)
+                score = 100
+                difficulty = 1
+                gates = 0
+                mold = create_mold(difficulty)
+                arrived = False
 
             elif play_again == "NO":
                 break

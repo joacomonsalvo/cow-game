@@ -45,15 +45,15 @@ def print_map(mold):
     for row in mold:
         for column in row:
             if column == "&":
-                print(f"{c_fore.RED}{column}	{c_style.RESET_ALL}", end="")
+                print(f"{c_fore.LIGHTCYAN_EX}{column}	{c_style.RESET_ALL}", end="")
             elif column == "P":
                 print(f"{c_fore.LIGHTGREEN_EX}{column}	{c_style.RESET_ALL}", end="")
             elif column == "T":
-                print(f"{c_fore.WHITE}{column}	{c_style.RESET_ALL}", end="")
+                print(f"{c_fore.RED}{column}	{c_style.RESET_ALL}", end="")
             elif column == "I":
                 print(f"{c_fore.GREEN}{column}	{c_style.RESET_ALL}", end="")
             elif column == "E":
-                print(f"{c_fore.LIGHTCYAN_EX}{column}	{c_style.RESET_ALL}", end="")
+                print(f"{c_fore.YELLOW}{column}	{c_style.RESET_ALL}", end="")
             else:
                 print(f"{c_fore.CYAN}{column}	{c_style.RESET_ALL}", end="")
         print()
